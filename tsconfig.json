@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "moduleDetection": "force",
+    "rootDir": "src",
+    "outDir": "dist",
+    "target": "es2022",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+  },
+  "include": ["src"],
+}
