@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "dev": "tsx src/main/index.ts",
     "start": "node dist/main/index.js",
     "lint": "biome lint",

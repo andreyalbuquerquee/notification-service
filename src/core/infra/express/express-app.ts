@@ -1,10 +1,11 @@
-import { DefaultErrorHandler } from './DefaultErrorHandler';
-import { env } from '../../../main/env';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import pinoHttp from 'pino-http';
+import { env } from '../../../main/env';
+import { DefaultErrorHandler } from './DefaultErrorHandler';
 import { expressErrorHandlerAdapter } from './expressErrorHandlerAdapter';
+import { routes } from './routes';
 
 export function createApp() {
   const app = express();
@@ -23,6 +24,8 @@ export function createApp() {
   app.get('/health', (_req, res) => {
     res.json({ ok: true });
   });
+
+  app.use(routes);
 
   app.use(expressErrorHandlerAdapter(new DefaultErrorHandler()));
 
