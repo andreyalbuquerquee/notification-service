@@ -3,17 +3,21 @@ import type { HttpRequest } from '../../../../core/application/ports/http/HttpRe
 import type { HttpResponse } from '../../../../core/application/ports/http/HttpResponse';
 import { HttpStatusCode } from '../../../../core/application/ports/http/HttpStatusCode';
 import { DomainError } from '../../../../core/domain/errors/DomainError';
-import type { SignUpUseCase } from '../../application/use-cases/SignUpUseCase';
-import { presentAuth } from '../AuthPresenter';
-import type { SignUpSchema } from '../validation/signUp.schema';
+import type { CreateNotificationUseCase } from '../../application/use-cases/CreateNotificationUseCase';
+import { presentNotification } from '../NotificationPresenter';
+import type { CreateNotificationSchema } from '../validation/createNotification.schema';
 
-export class SignUpController implements Controller {
+export class CreateNotificationController implements Controller {
   constructor(
-    private readonly useCase: SignUpUseCase,
-    private readonly schema: SignUpSchema,
+    private readonly useCase: CreateNotificationUseCase,
+    private readonly schema: CreateNotificationSchema,
   ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
+    if (!request.user?.id) {
+      throw DomainError.unauthorized('Usuário não autenticado');
+    }
+
     const parsed = this.schema.safeParse(request.body ?? {});
 
     if (!parsed.success) {
@@ -22,11 +26,15 @@ export class SignUpController implements Controller {
       });
     }
 
-    const result = await this.useCase.execute(parsed.data);
+    const result = await this.useCase.execute({
+      userId: request.user.id,
+      title: parsed.data.title,
+      content: parsed.data.content,
+    });
 
     return {
       statusCode: HttpStatusCode.CREATED,
-      body: presentAuth(result),
+      body: { notification: presentNotification(result.notification) },
     };
   }
 }

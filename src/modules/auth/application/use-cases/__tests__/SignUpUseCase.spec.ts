@@ -56,9 +56,9 @@ describe('SignUpUseCase', () => {
 
     expect(deps.passwordService.hash).toHaveBeenCalledWith('password123');
     expect(deps.userRepo.create).toHaveBeenCalledTimes(1);
-    
+
     const createdUser = deps.userRepo.create.mock.calls[0][0];
-    
+
     expect(createdUser.name).toBe('Ada Lovelace');
     expect(createdUser.email.value).toBe('ada@example.com');
     expect(deps.tokenService.sign).toHaveBeenCalledWith({

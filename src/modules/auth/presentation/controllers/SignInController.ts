@@ -1,6 +1,7 @@
 import type { Controller } from '../../../../core/application/ports/http/Controller';
 import type { HttpRequest } from '../../../../core/application/ports/http/HttpRequest';
 import type { HttpResponse } from '../../../../core/application/ports/http/HttpResponse';
+import { HttpStatusCode } from '../../../../core/application/ports/http/HttpStatusCode';
 import { DomainError } from '../../../../core/domain/errors/DomainError';
 import type { SignInUseCase } from '../../application/use-cases/SignInUseCase';
 import { presentAuth } from '../AuthPresenter';
@@ -24,7 +25,7 @@ export class SignInController implements Controller {
     const result = await this.useCase.execute(parsed.data);
 
     return {
-      statusCode: 200,
+      statusCode: HttpStatusCode.OK,
       body: presentAuth(result),
     };
   }
