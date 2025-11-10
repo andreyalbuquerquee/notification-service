@@ -20,6 +20,8 @@ export class MongoNotificationRepo implements INotificationRepo {
       content: data.content,
       readAt: data.readAt,
       deletedAt: data.deletedAt,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     });
   }
 
