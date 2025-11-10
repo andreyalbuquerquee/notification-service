@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { expressRouteAdapter } from '../../../core/infra/express/expressRouteAdapter';
+import { expressRouteAdapter } from '../../../core/infra/express/adapters/expressRouteAdapter';
 import type { AuthControllers } from '../presentation/controllers';
 
 export function createAuthRoutes(controllers: AuthControllers) {

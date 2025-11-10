@@ -36,6 +36,11 @@ const EnvSchema = z.object({
     ),
 
   LOG_LEVEL: z.enum(logLevels).default('info'),
+
+  REDIS_URL: z
+    .string()
+    .url('REDIS_URL deve ser uma URL válida')
+    .default('redis://localhost:6379/0'),
 });
 
 type Env = z.infer<typeof EnvSchema>;
